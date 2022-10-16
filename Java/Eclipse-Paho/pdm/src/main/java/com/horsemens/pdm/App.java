@@ -2,9 +2,6 @@
 
 package com.horsemens.pdm;
 
-import org.eclipse.paho.client.mqttv3.*;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-
 
 /**
  * Hello world!
@@ -14,15 +11,14 @@ public class App
 {
     public static void main( String[] args )
     {
-//        ServerListener listener = new ServerListener();
-//        listener.subscribe("pdm");
 
+        BrokerConfig brokerConfig1 = new BrokerConfig("raj");
+        Sensor s1 = new Sensor(brokerConfig1);
+        s1.publish("this is raj", "pdm", 2);
 
-        SensorOne sensor1 = new SensorOne();
-        sensor1.publish("this is sensor 1", "pdm");
-
-
-
+//        BrokerConfig brokerConfig2 = new BrokerConfig("pratik");
+//        ServerListener sl1 = new ServerListener(brokerConfig2);
+//        sl1.subscribe("pdm");
     }
 
 

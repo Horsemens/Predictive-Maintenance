@@ -5,23 +5,16 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 
 public class ServerListener implements MqttCallback {
+    private Broker broker;
+    public ServerListener(BrokerConfig brokerConfig) {
+        this.broker = new Broker(brokerConfig);
+    }
 
     public void subscribe(String topic){
-        BrokerConfig config = new BrokerConfig();
-        String broker       = config.getBroker();
-        String clientId     = config.getClientId();
-        MemoryPersistence persistence = config.getPersistence();
-
         try {
-            MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
-            MqttConnectOptions connOpts = new MqttConnectOptions();
-            connOpts.setCleanSession(true);
-            System.out.println("Connecting to broker: "+broker);
-            sampleClient.connect(connOpts);
-            System.out.println("Connected");
 
-            sampleClient.setCallback(this);
-            sampleClient.subscribe(topic);
+            this.broker.getClient().setCallback(this);
+            this.broker.getClient().subscribe(topic);
 
         } catch(MqttException me) {
             System.out.println("reason "+me.getReasonCode());
