@@ -18,9 +18,6 @@ public class Sensor {
             message.setQos(qos);
             broker.getClient().publish(topic, message);
             System.out.println("Message published");
-            broker.getClient().disconnect();
-            System.out.println("Disconnected");
-            System.exit(0);
         } catch(MqttException me) {
             System.out.println("reason "+me.getReasonCode());
             System.out.println("msg "+me.getMessage());
@@ -29,5 +26,22 @@ public class Sensor {
             System.out.println("excep "+me);
             me.printStackTrace();
         }
+    }
+
+    public void disconnect() {
+        try{
+            broker.getClient().disconnect();
+            System.out.println("Disconnected");
+            System.exit(0);
+        }catch(MqttException me) {
+            System.out.println("reason "+me.getReasonCode());
+            System.out.println("msg "+me.getMessage());
+            System.out.println("loc "+me.getLocalizedMessage());
+            System.out.println("cause "+me.getCause());
+            System.out.println("excep "+me);
+            me.printStackTrace();
+        }
+
+
     }
 }

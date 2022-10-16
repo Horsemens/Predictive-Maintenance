@@ -14,7 +14,11 @@ public class App
 
         BrokerConfig brokerConfig1 = new BrokerConfig("raj");
         Sensor s1 = new Sensor(brokerConfig1);
-        s1.publish("this is raj", "pdm", 2);
+        //TODO: add data simulation here
+        for (int i=0; i<100; i++){
+            s1.publish(Integer.toString(i), "pdm", 2);
+        }
+        s1.disconnect();
 
 //        BrokerConfig brokerConfig2 = new BrokerConfig("pratik");
 //        ServerListener sl1 = new ServerListener(brokerConfig2);
