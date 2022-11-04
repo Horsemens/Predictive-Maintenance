@@ -1,32 +1,48 @@
-
-
 package com.horsemens.pdm;
 
-
-/**
- * Hello world!
- *
- */
 public class App
 {
     public static void main( String[] args )
     {
-
-        BrokerConfig brokerConfig1 = new BrokerConfig("raj");
-        Sensor s1 = new Sensor(brokerConfig1);
-        //TODO: add data simulation here
-        for (int i=0; i<100; i++){
-            s1.publish(Integer.toString(i), "pdm", 2);
+        //TODO: Optimize this code
+        String clientId = System.getenv("CLIENTID");
+        if(clientId == null){
+            System.out.println("[ERROR] Client ID not set, Please set enviroment variable CLIENTID");
+            System.exit(1);
         }
-        s1.disconnect();
 
-//        BrokerConfig brokerConfig2 = new BrokerConfig("pratik");
-//        ServerListener sl1 = new ServerListener(brokerConfig2);
-//        sl1.subscribe("pdm");
+        String brokerUrl = System.getenv("BROKERURL");
+        if(brokerUrl == null){
+            System.out.println("[ERROR] Broker Url not set, Please set enviroment variable BROKERURL");
+            System.exit(1);
+        }
+
+        BrokerConfig brokerConfig = new BrokerConfig(brokerUrl, clientId);
+
+        String role = System.getenv("ROLE");
+        if(role == null){
+            System.out.println("[ERROR] Role not set, Please set enviroment variable ROLE");
+            System.exit(1);
+        }
+
+        String topic = System.getenv("TOPIC");
+        if(topic == null){
+            System.out.println("[ERROR] Topic not set, Please set enviroment variable TOPIC");
+            System.exit(1);
+        }
+        
+        switch(role.toLowerCase()){
+            case "thermalsensor":
+                new ThermalSensor(brokerConfig, topic);
+                break;
+            case "subscriber":
+                new Subscriber(brokerConfig, topic);
+                break;
+            default:
+                System.out.println("[ERROR] Invalid role");
+                System.exit(1);
+        }
     }
-
-
-
 }
 
 
