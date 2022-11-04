@@ -8,11 +8,11 @@ services:
     volumes:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
   subscriber:
-    image: horsemens/horsemens-pahoclient:1.0.0
+    image: horsemens/horsemens-pahoclient:${TAG}
     env_file:
       - env/listner.env
   thermalsensor:
-    image: horsemens/horsemens-pahoclient:1.0.0
+    image: horsemens/horsemens-pahoclient:${TAG}
     env_file:
       - env/sensor.env
 
