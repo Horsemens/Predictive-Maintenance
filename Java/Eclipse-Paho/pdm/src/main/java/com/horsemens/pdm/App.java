@@ -1,5 +1,7 @@
 package com.horsemens.pdm;
 
+import java.io.InputStream;
+
 public class App
 {
     public static void main( String[] args )
@@ -30,7 +32,7 @@ public class App
             System.out.println("[ERROR] Topic not set, Please set enviroment variable TOPIC");
             System.exit(1);
         }
-        
+
         switch(role.toLowerCase()){
             case "thermalsensor":
                 new ThermalSensor(brokerConfig, topic);
@@ -38,11 +40,20 @@ public class App
             case "subscriber":
                 new Subscriber(brokerConfig, topic);
                 break;
+            case "ecu":
+                Ecu ecu = new Ecu(brokerConfig,topic);
+                CsvSourcePublisher csvSourcePublisher = new CsvSourcePublisher(ecu);
+                csvSourcePublisher.readAndPublish();
+                break;
             default:
                 System.out.println("[ERROR] Invalid role");
                 System.exit(1);
         }
     }
+
+
+
+
 }
 
 

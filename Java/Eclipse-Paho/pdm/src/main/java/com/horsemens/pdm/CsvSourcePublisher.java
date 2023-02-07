@@ -1,12 +1,19 @@
 package com.horsemens.pdm;
 
+import org.json.simple.JSONObject;
+
 import java.io.*;
 import java.net.URL;
 
-public class CsvSource {
-    public static void main( String[] args ){
-        CsvSource csvSource = new CsvSource();
-        File csvFile = csvSource.getCsvFile();
+public class CsvSourcePublisher {
+    private Ecu ecu;
+
+    public CsvSourcePublisher(Ecu ecu) {
+        this.ecu = ecu;
+    }
+
+    public void readAndPublish(){
+        File csvFile = getCsvFile();
         String line = "";
         String splitBy = ",";
         try
@@ -14,11 +21,25 @@ public class CsvSource {
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine()) != null)   //returns a Boolean value
             {
-                String[] employee = line.split(splitBy);    // use comma as separator
-                System.out.println("Employee [First Name=" + employee[0] + ", Last Name=" + employee[1] + ", Designation=" + employee[2] + ", Contact=" + employee[3] + ", Salary= " + employee[4] + ", City= " + employee[5] +"]");
+                String[] data = line.split(splitBy);    // use comma as separator
+
+                //creating json to be published
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("AFRDifference[AFR]", data[2]);
+                jsonObject.put("BatteryVoltage[BatteryVoltage]", data[3]);
+                jsonObject.put("IgnitionTiming[Angle]", data[5]);
+                jsonObject.put("AirTemp[Temperature]", data[6]);
+                jsonObject.put("CoolantTemp[Temperature]", data[7]);
+                jsonObject.put("MAPSource[Pressure]", data[8]);
+                jsonObject.put("RPM[EngineSpeed]", data[14]);
+
+                //publishing
+                ecu.publish(jsonObject.toJSONString(), 2);
+                Thread.sleep(1000);
+
             }
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             e.printStackTrace();
         }
