@@ -11,10 +11,10 @@ services:
     image: horsemens/horsemens-pahoclient:${TAG}
     env_file:
       - env/listner.env
-  thermalsensor:
+  ecu:
     image: horsemens/horsemens-pahoclient:${TAG}
     env_file:
-      - env/sensor.env
+      - env/ecu.env
 
 
   

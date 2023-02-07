@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class CsvSourcePublisher {
     private Ecu ecu;
@@ -11,16 +12,18 @@ public class CsvSourcePublisher {
     public CsvSourcePublisher(Ecu ecu) {
         this.ecu = ecu;
     }
-
+    public CsvSourcePublisher() {
+        this.ecu = null;
+    }
+    
     public void readAndPublish(){
-        File csvFile = getCsvFile();
         String line = "";
         String splitBy = ",";
-        try
-        {
-            BufferedReader br = new BufferedReader(new FileReader(csvFile));
-            while ((line = br.readLine()) != null)   //returns a Boolean value
-            {
+        InputStream csvFile = getCsvFile();
+        try (InputStreamReader streamReader =
+                     new InputStreamReader(csvFile, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(streamReader)) {
+            while ((line = reader.readLine()) != null) {
                 String[] data = line.split(splitBy);    // use comma as separator
 
                 //creating json to be published
@@ -36,23 +39,23 @@ public class CsvSourcePublisher {
                 //publishing
                 ecu.publish(jsonObject.toJSONString(), 2);
                 Thread.sleep(1000);
-
             }
-        }
-        catch (Exception e)
-        {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
-    public File getCsvFile(){
+    public InputStream getCsvFile(){
         try {
 
-            URL resource = getClass().getClassLoader().getResource("all-data.csv");
+            InputStream resource = getClass().getClassLoader().getResourceAsStream("all-data.csv");
+
             if (resource == null) {
                 throw new IllegalArgumentException("file not found!");
             } else {
-                return new File(resource.toURI());
+                return resource;
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
