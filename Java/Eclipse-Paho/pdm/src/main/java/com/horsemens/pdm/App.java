@@ -26,6 +26,7 @@ public class App
             System.out.println("[ERROR] Role not set, Please set enviroment variable ROLE");
             System.exit(1);
         }
+        System.out.println(role);
 
         String topic = System.getenv("TOPIC");
         if(topic == null){
@@ -35,7 +36,9 @@ public class App
 
         switch(role.toLowerCase()){
             case "thermalsensor":
-                new ThermalSensor(brokerConfig, topic);
+                Ecu ecu1 = new Ecu(brokerConfig,topic);
+                CsvSourcePublisher csvSourcePublisher1 = new CsvSourcePublisher(ecu1);
+                csvSourcePublisher1.readAndPublish();
                 break;
             case "subscriber":
                 new Subscriber(brokerConfig, topic);

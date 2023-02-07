@@ -3,6 +3,7 @@ package com.horsemens.pdm;
 import org.json.simple.JSONObject;
 
 import java.io.*;
+import java.net.CacheRequest;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -15,7 +16,11 @@ public class CsvSourcePublisher {
     public CsvSourcePublisher() {
         this.ecu = null;
     }
-    
+
+//    public static  void main(String[] args){
+//        new CsvSourcePublisher().readAndPublish();
+//    }
+
     public void readAndPublish(){
         String line = "";
         String splitBy = ",";
@@ -38,7 +43,7 @@ public class CsvSourcePublisher {
 
                 //publishing
                 ecu.publish(jsonObject.toJSONString(), 2);
-                Thread.sleep(1000);
+                Thread.sleep(10000);
             }
 
         } catch (Exception e) {

@@ -4,7 +4,8 @@ public class Ecu {
     public Sensor s;
     public String topic;
     public Ecu(BrokerConfig brokerConfig, String topic){
-        Sensor s = new Sensor(brokerConfig);
+        this.s = new Sensor(brokerConfig);
+        this.topic = topic;
     }
 
     public void publish(String message, int qos){
