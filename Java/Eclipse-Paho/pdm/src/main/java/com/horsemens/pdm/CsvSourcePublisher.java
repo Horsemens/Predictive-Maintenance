@@ -43,7 +43,7 @@ public class CsvSourcePublisher {
 
                 //publishing
                 ecu.publish(jsonObject.toJSONString(), 2);
-                Thread.sleep(10000);
+                Thread.sleep(60000);
             }
 
         } catch (Exception e) {
