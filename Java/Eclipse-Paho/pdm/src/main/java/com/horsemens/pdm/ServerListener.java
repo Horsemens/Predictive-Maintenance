@@ -2,6 +2,7 @@ package com.horsemens.pdm;
 
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import com.horsemens.pdm.ApiRequest;
 
 
 public class ServerListener implements MqttCallback {
@@ -36,6 +37,8 @@ public class ServerListener implements MqttCallback {
     @Override
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
         System.out.println(mqttMessage);
+        ApiRequest requestObj = new ApiRequest();
+        requestObj.sendData(mqttMessage.toString());
     }
 
     @Override
