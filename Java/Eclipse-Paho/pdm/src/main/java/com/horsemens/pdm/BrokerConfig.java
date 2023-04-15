@@ -4,8 +4,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class BrokerConfig {
 
-    private String broker       = "tcp://somesh-OMEN-Laptop-15-en0xxx:8083";
-    private String clientId     = "clientId124";
+    private String broker       = "tcp://127.0.0.1:8083";
+    private String clientId     = "default";
     private MemoryPersistence persistence = new MemoryPersistence();
 
     public BrokerConfig(String broker, String clientId) {

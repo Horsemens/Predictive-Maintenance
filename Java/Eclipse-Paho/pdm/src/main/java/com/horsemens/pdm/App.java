@@ -38,7 +38,7 @@ public class App
             case "thermalsensor":
                 Ecu ecu1 = new Ecu(brokerConfig,topic);
                 CsvSourcePublisher csvSourcePublisher1 = new CsvSourcePublisher(ecu1);
-                csvSourcePublisher1.readAndPublish();
+                csvSourcePublisher1.readAndPublish("all-data.csv");
                 break;
             case "subscriber":
                 new Subscriber(brokerConfig, topic);
@@ -46,7 +46,7 @@ public class App
             case "ecu":
                 Ecu ecu = new Ecu(brokerConfig,topic);
                 CsvSourcePublisher csvSourcePublisher = new CsvSourcePublisher(ecu);
-                csvSourcePublisher.readAndPublish();
+                csvSourcePublisher.readAndPublish("all-data.csv");
                 break;
             default:
                 System.out.println("[ERROR] Invalid role");
