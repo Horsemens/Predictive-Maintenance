@@ -45,6 +45,12 @@ public class CsvSourcePublisher {
                     jsonObject.put("CoolantTemp[Temperature]", data[7]);
                     jsonObject.put("MAPSource[Pressure]", data[8]);
                     jsonObject.put("RPM[EngineSpeed]", data[14]);
+                    jsonObject.put("LambdaSensor1[AFR]", data[9]);
+                    jsonObject.put("BaseFuel[Percentage]", data[10]);
+                    jsonObject.put("BaseIgnition[AngleIgnSprt2K]", data[11]);
+                    jsonObject.put("IgnitionCoolantTempCorrection[AngleOffset10deg]", data[12]);
+                    jsonObject.put("IgnitionAirTempCorrection[Angle]", data[13]);
+                    
 
                     //publishing
                     ecu.publish(jsonObject.toJSONString(), 2);
