@@ -48,8 +48,7 @@ public class CsvSourcePublisher {
                     jsonObject.put("LambdaSensor1[AFR]", data[9]);
                     jsonObject.put("BaseFuel[Percentage]", data[10]);
                     jsonObject.put("BaseIgnition[AngleIgnSprt2K]", data[11]);
-                    jsonObject.put("IgnitionCoolantTempCorrection[AngleOffset10deg]", data[12]);
-                    jsonObject.put("IgnitionAirTempCorrection[Angle]", data[13]);
+                  
                     
 
                     //publishing
